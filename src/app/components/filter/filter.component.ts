@@ -27,6 +27,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.headings$ = this.networkService.getFilterItems$();
+    console.log('headings$', this.headings$)
     this.createForm().subscribe();
   }
 

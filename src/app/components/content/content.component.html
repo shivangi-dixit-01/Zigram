@@ -23,7 +23,11 @@
               <img class="mat-card-img" mat-card-sm-image src="{{recipe.strDrinkThumb}}" alt="">
             </div>
             <mat-card-content>
-              <div> {{recipe.strDrink}} </div>
+              <div>
+                <button class="btn default" (click)= "openDialog(recipe.strDrink)" >{{recipe.strDrink}}</button>
+              </div>
+              
+              <!-- <div > {{recipe.strDrink}} </div> -->
             </mat-card-content>
           </mat-card>
         </mat-grid-tile>

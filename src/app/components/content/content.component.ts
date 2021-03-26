@@ -7,6 +7,8 @@ import { Observable, Subject } from 'rxjs';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { LoaderService } from 'src/app/services/loader.service';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { DetailsComponent } from '../details/details.component';
 
 @Component({
   selector: 'app-content',
@@ -29,7 +31,8 @@ export class ContentComponent implements AfterViewInit, OnDestroy {
     private formValuesService: FormValuesService,
     private networkService: NetworkService,
     public loaderService: LoaderService,
-  ) {}
+    public dialog: MatDialog
+  ) { }
 
   ngAfterViewInit(): void {
     this.getValues$().subscribe(categories => {
@@ -45,22 +48,22 @@ export class ContentComponent implements AfterViewInit, OnDestroy {
 
   getValues$(): Observable<ContentData[]> {
     return this.formValuesService.getValue$()
-    .pipe(
-      tap(() => this.cocktails = []),
-      tap(() => !!this.paginator ? this.paginator.firstPage() : null),
-      filter(formValues => !!formValues),
-      map(formValues => Object.entries(formValues)
-        .map((el: object) => el[0] = {title: el[0], display: el[1]})
-        .filter(category => category.display === true)
-      ),
-      mergeMap(categories => categories.map(category => this.networkService.getContentItems$(category.title)
-        .pipe(
-          map(cocktails => [{...category, data: cocktails}]),
-        )
-      )),
-      concatAll(),
-      takeUntil(this.onDestroy$),
-    );
+      .pipe(
+        tap(() => this.cocktails = []),
+        tap(() => !!this.paginator ? this.paginator.firstPage() : null),
+        filter(formValues => !!formValues),
+        map(formValues => Object.entries(formValues)
+          .map((el: object) => el[0] = { title: el[0], display: el[1] })
+          .filter(category => category.display === true)
+        ),
+        mergeMap(categories => categories.map(category => this.networkService.getContentItems$(category.title)
+          .pipe(
+            map(cocktails => [{ ...category, data: cocktails }]),
+          )
+        )),
+        concatAll(),
+        takeUntil(this.onDestroy$),
+      );
   }
 
   setPaginatorData(): void {
@@ -77,5 +80,13 @@ export class ContentComponent implements AfterViewInit, OnDestroy {
     }
     this.paginatorPageIndex = event.pageIndex;
     this.currentPage = this.cocktails.slice(paginatorStartIndex, paginatorEndIndex);
+  }
+
+  openDialog(drinkname: string): MatDialogRef<DetailsComponent> {
+    const matcon = new MatDialogConfig()
+    matcon.data = { drinkname };
+    matcon.height = '550px';
+    matcon.width = '800px';
+    return this.dialog.open(DetailsComponent, matcon);
   }
 }

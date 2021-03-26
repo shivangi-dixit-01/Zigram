@@ -1,0 +1,28 @@
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+  </div>  
+
+    <div *ngFor="let detail of detailRecord$ | async">
+    <h2 class="title">Drink Name: {{detail.strDrink}}</h2>
+    <div class="row">
+        <div class="column">
+            <h1 class="ingree">Ingredients: </h1>
+            <th align="left">
+                <tr> {{detail.strIngredient1}}</tr>
+                <tr> {{detail.strIngredient2}}</tr>
+                <tr> {{detail.strIngredient3}}</tr>
+                <tr> {{detail.strIngredient4}}</tr>
+                <tr> {{detail.strIngredient5}}</tr>
+                <tr> {{detail.strIngredient6}}</tr>
+                <tr> {{detail.strIngredient7}}</tr>
+                <tr> {{detail.strIngredient8}}</tr>
+                <tr> {{detail.strIngredient9}}</tr>
+                <tr> {{detail.strIngredient10}}</tr>
+            </th>
+            <h1 class="ingree">Instructions: </h1>
+            <div>{{detail.strInstructions}}</div>
+        </div>
+        <img class="mat-card-img; column-1" style="height: 400px;" mat-card-sm-image src="{{detail.strDrinkThumb}}"
+            alt="">
+    </div>
+</div>
