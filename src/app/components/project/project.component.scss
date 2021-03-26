@@ -1,0 +1,41 @@
+.project {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 95vw;
+  box-sizing: border-box;
+}
+
+  .main {
+    display: flex;
+  }
+
+    .filter {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      width: 20vw;
+      border-right: 1px solid #D0D0D0;
+    }
+
+      .filter-bar {
+        position: fixed;
+        margin-top: 5vh;
+      }
+
+    .content {
+      width: 75vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  visibility: visible;
+}

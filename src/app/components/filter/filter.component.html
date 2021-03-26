@@ -1,0 +1,13 @@
+<div class="container">
+  <form [formGroup]='filtersForm' (ngSubmit)='submitForm()'>
+    <div class="filter-item" *ngFor="let heading of headings$ | async">
+      <div class="input">
+        <label><input type="checkbox" [formControlName]='heading?.strCategory'></label>
+      </div>
+      <div class="text"> {{heading?.strCategory}} </div>
+    </div>
+    <div class="filter-button">
+      <button class="btn" type='submit'>Apply</button>
+    </div>
+  </form>
+</div>
